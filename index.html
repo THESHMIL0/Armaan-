@@ -222,6 +222,16 @@
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
+
+        /* Fade transition class for the quote */
+        .fade-in-text {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-pink-300 selection:text-white">
@@ -243,16 +253,18 @@
     </div>
 
     <div id="quiz-1-overlay" class="overlay-screen hidden-screen">
-        <h1 class="font-cursive text-4xl md:text-6xl text-white mb-4 text-center px-4 drop-shadow-md">Wait! 🛑</h1>
-        <p class="text-white text-lg md:text-xl mb-8 text-center px-6 max-w-md">You need to solve this hard question before you can see your gift.</p>
-        
-        <div class="bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 mb-10">
-            <h2 class="font-bold text-5xl text-pink-600 text-center">1 + 1 = ?</h2>
-        </div>
+        <div id="quiz-1-content" class="flex flex-col items-center justify-center w-full">
+            <h1 class="font-cursive text-4xl md:text-6xl text-white mb-4 text-center px-4 drop-shadow-md">Wait! 🛑</h1>
+            <p class="text-white text-lg md:text-xl mb-8 text-center px-6 max-w-md">You need to solve this hard question before you can see your gift.</p>
+            
+            <div class="bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 mb-10 w-64 md:w-80">
+                <h2 class="font-bold text-5xl text-pink-600 text-center">1 + 1 = ?</h2>
+            </div>
 
-        <div class="flex gap-6">
-            <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">2</button>
-            <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">11</button>
+            <div class="flex gap-6">
+                <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">2</button>
+                <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">11</button>
+            </div>
         </div>
     </div>
 
@@ -434,13 +446,27 @@
         }
 
         function passMath() {
-            document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
-            document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
-            
-            // Set initial position of Yes wrapper to be centered relative to its container
-            const yesWrap = document.getElementById('yes-wrap');
-            yesWrap.style.left = 'calc(50% - 130px)'; // rough center based on static No button location
-            yesWrap.style.top = '100px'; // Initial top position within the relative overlay
+            // Replace the math quiz content with the romantic quote
+            const quiz1Content = document.getElementById('quiz-1-content');
+            quiz1Content.innerHTML = `
+                <div class="fade-in-text flex flex-col items-center">
+                    <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">1 + 1 = 11 😸</h1>
+                    <p class="text-white text-xl md:text-3xl text-center px-6 max-w-2xl leading-relaxed font-medium drop-shadow">
+                        "Because when two souls truly connect, they don’t stay separate numbers anymore... they stand together as one beautiful bond." ❤️
+                    </p>
+                </div>
+            `;
+
+            // Wait 5 seconds so he can read the quote, then transition to the Love Quiz
+            setTimeout(() => {
+                document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
+                document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
+                
+                // Set initial position of Yes wrapper to be centered relative to its container
+                const yesWrap = document.getElementById('yes-wrap');
+                yesWrap.style.left = 'calc(50% - 130px)'; // rough center based on static No button location
+                yesWrap.style.top = '100px'; // Initial top position within the relative overlay
+            }, 5500); 
         }
 
         function wrongLove() {

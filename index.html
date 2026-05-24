@@ -344,10 +344,25 @@
     <script>
         // --- QUIZ LOGIC ---
         let yesClicks = 0;
+        let isPlaying = false;
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("music-btn");
 
         function startQuiz() {
             document.getElementById('surprise-overlay').classList.add('hidden-screen');
             document.getElementById('quiz-1-overlay').classList.remove('hidden-screen');
+            
+            // Start Music Immediately on First Click
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.innerText = "⏸️";
+            }).catch(e => {
+                console.log("Autoplay blocked, user needs to click play manually.");
+                musicBtn.innerText = "▶️";
+            });
+            
+            // Show Music Button
+            musicBtn.style.display = "flex";
         }
 
         function wrongMath() {
@@ -400,9 +415,6 @@
         // --- EMOJI SHOWER & REVEAL LOGIC ---
         const symbols = ['❤️', '💕', '✨', '💋', '😸', '💖'];
         let heartInterval;
-        const music = document.getElementById("bgMusic");
-        const musicBtn = document.getElementById("music-btn");
-        let isPlaying = false;
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -420,16 +432,6 @@
         function finalReveal() {
             const mainContent = document.getElementById('main-content');
             
-            // Play Music
-            music.play().then(() => {
-                isPlaying = true;
-                musicBtn.innerText = "⏸️";
-            }).catch(e => {
-                console.log("Autoplay blocked, user needs to click play manually.");
-                musicBtn.innerText = "▶️";
-            });
-            
-            musicBtn.style.display = "flex";
             heartInterval = setInterval(createHeart, 300);
 
             mainContent.style.display = 'block';

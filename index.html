@@ -18,6 +18,49 @@
             font-family: 'Caveat', cursive;
         }
 
+        /* --- NEW CUTE STYLES --- */
+        .bg-cute-gradient {
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 2rem;
+            box-shadow: 0 8px 32px rgba(255, 105, 135, 0.2);
+        }
+
+        /* 3D Button Effect */
+        .btn-3d {
+            transition: all 0.1s ease;
+            border-bottom: 5px solid #d81b60; /* Dark pink shadow */
+            position: relative;
+        }
+        .btn-3d:active {
+            transform: translateY(5px);
+            border-bottom: 0px solid #d81b60;
+        }
+        .btn-3d-white {
+            transition: all 0.1s ease;
+            border-bottom: 5px solid #e2e8f0; /* Gray shadow for white buttons */
+        }
+        .btn-3d-white:active {
+            transform: translateY(5px);
+            border-bottom: 0px solid #e2e8f0;
+        }
+
+        /* Floating Decorations */
+        .float-fast { animation: floatY 3s ease-in-out infinite; }
+        .float-slow { animation: floatY 5s ease-in-out infinite reverse; }
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        /* ----------------------- */
+
+
         /* Heart Falling Animation */
         .heart {
             position: fixed;
@@ -29,16 +72,13 @@
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
         /* Full Screen Overlays */
         .overlay-screen {
             position: fixed;
             inset: 0;
-            background: #ffb3c6;
             z-index: 50;
             display: flex;
             flex-direction: column;
@@ -61,7 +101,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
         }
 
-        /* Running Button & Bubble transition - Added super high z-index */
+        /* Running Button & Bubble transition */
         #yes-wrap {
             transition: left 0.2s ease, top 0.2s ease;
             position: absolute;
@@ -69,7 +109,7 @@
             flex-direction: column;
             align-items: center;
             pointer-events: none;
-            z-index: 999 !important; /* Force it to ALWAYS stay on top */
+            z-index: 999 !important; 
         }
 
         #yes-btn {
@@ -165,9 +205,7 @@
         }
 
         @media (max-width: 768px) {
-            .timeline-container::before {
-                left: 20px;
-            }
+            .timeline-container::before { left: 20px; }
             .timeline-item {
                 width: 100% !important;
                 padding-left: 50px !important;
@@ -210,11 +248,8 @@
             transition: transform 0.2s ease;
         }
 
-        #music-btn:hover {
-            transform: scale(1.1);
-        }
+        #music-btn:hover { transform: scale(1.1); }
 
-        /* Fixed Counter Boxes for Mobile */
         .time-box {
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid #ffb3c6;
@@ -224,11 +259,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        /* Fade transition class for the quote */
-        .fade-in-text {
-            animation: fadeIn 1.5s ease-in;
-        }
-
+        .fade-in-text { animation: fadeIn 1.5s ease-in; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -244,41 +275,55 @@
 
     <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
-    <div id="surprise-overlay" class="overlay-screen">
-        <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">Hi Armaan...</h1>
-        <p class="text-white text-xl mb-12 text-center px-4">I have a little surprise for you 🤫</p>
-        <button onclick="startQuiz()" class="pulse-btn bg-white text-pink-500 font-bold py-4 px-10 rounded-full text-xl shadow-xl hover:bg-pink-50 transition duration-300 flex items-center gap-3">
-            <span>Tap to Open</span>
-            <span class="text-2xl">💌</span>
-        </button>
+    <div id="surprise-overlay" class="overlay-screen bg-cute-gradient">
+        <div class="glass-panel p-10 max-w-md w-[90%] text-center relative flex flex-col items-center">
+            <div class="absolute -top-6 -left-4 text-5xl float-fast">💌</div>
+            <div class="absolute -bottom-6 -right-4 text-5xl float-slow">✨</div>
+            
+            <h1 class="font-cursive text-5xl md:text-6xl text-pink-600 mb-4 drop-shadow-sm">Hi Armaan...</h1>
+            <p class="text-gray-700 text-lg mb-8 font-medium">I have a little surprise for you 🤫</p>
+            
+            <button onclick="startQuiz()" class="pulse-btn bg-pink-500 text-white font-bold py-3 px-8 rounded-full text-xl shadow-xl hover:bg-pink-600 transition flex items-center gap-3 btn-3d">
+                <span>Tap to Open</span>
+            </button>
+        </div>
     </div>
 
-    <div id="quiz-1-overlay" class="overlay-screen hidden-screen">
-        <div id="quiz-1-content" class="flex flex-col items-center justify-center w-full">
-            <h1 class="font-cursive text-4xl md:text-6xl text-white mb-4 text-center px-4 drop-shadow-md">Wait! 🛑</h1>
-            <p class="text-white text-lg md:text-xl mb-8 text-center px-6 max-w-md">You need to solve this hard question before you can see your gift.</p>
+    <div id="quiz-1-overlay" class="overlay-screen hidden-screen bg-cute-gradient">
+        <div id="quiz-1-content" class="glass-panel p-8 max-w-md w-[90%] flex flex-col items-center justify-center relative">
+            <div class="absolute -top-5 right-4 text-4xl float-slow">🤔</div>
             
-            <div class="bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 mb-10 w-64 md:w-80">
-                <h2 class="font-bold text-5xl text-pink-600 text-center">1 + 1 = ?</h2>
+            <h1 class="font-cursive text-4xl md:text-5xl text-pink-600 mb-2 drop-shadow-sm">Wait! 🛑</h1>
+            <p class="text-gray-700 text-md mb-6 text-center font-medium">You need to solve this hard question before you can see your gift.</p>
+            
+            <div class="bg-white/60 p-6 rounded-2xl border-2 border-dashed border-pink-400 mb-8 w-full">
+                <h2 class="font-bold text-5xl text-pink-500 text-center">1 + 1 = ?</h2>
             </div>
 
-            <div class="flex gap-6">
-                <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">2</button>
-                <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">11</button>
+            <div class="flex gap-6 w-full justify-center">
+                <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-xl shadow-md btn-3d-white">2</button>
+                <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-xl shadow-md btn-3d-white">11</button>
             </div>
         </div>
     </div>
 
-    <div id="quiz-2-overlay" class="overlay-screen hidden-screen relative">
-        <h1 class="font-cursive text-5xl md:text-7xl text-white mb-12 text-center px-4 drop-shadow-md">Do you love me? 🥺</h1>
+    <div id="quiz-2-overlay" class="overlay-screen hidden-screen bg-cute-gradient relative overflow-hidden">
+        
+        <div class="absolute top-10 left-10 text-4xl opacity-50 float-slow">☁️</div>
+        <div class="absolute bottom-20 right-10 text-5xl opacity-50 float-fast">💖</div>
+        <div class="absolute top-20 right-20 text-3xl opacity-50 float-slow">✨</div>
+
+        <div class="glass-panel px-10 py-6 mb-16 rounded-full border-2 border-white/60 shadow-lg">
+            <h1 class="font-cursive text-4xl md:text-6xl text-pink-600 text-center drop-shadow-sm m-0">Do you love me? 🥺</h1>
+        </div>
         
         <div id="yes-wrap">
             <div id="thought-bubble" class="text-pink-600 font-medium text-sm md:text-base">Hmmm... 🤔</div>
-            <button id="yes-btn" onclick="tryYes()" class="bg-pink-500 text-white border-2 border-white font-bold py-3 px-10 rounded-full text-2xl shadow-lg">Yes</button>
+            <button id="yes-btn" onclick="tryYes()" class="bg-pink-500 text-white font-bold py-3 px-12 rounded-full text-2xl shadow-lg btn-3d">Yes</button>
         </div>
         
         <div class="flex gap-8 relative w-full justify-center" style="height: 60px; z-index: 1;">
-            <button onclick="wrongLove()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-2xl shadow-lg" style="margin-left: 150px;">No</button>
+            <button onclick="wrongLove()" class="bg-white text-pink-500 font-bold py-3 px-12 rounded-full text-2xl shadow-lg btn-3d-white" style="margin-left: 160px;">No</button>
         </div>
     </div>
 
@@ -401,7 +446,7 @@
             <div class="bg-white/70 backdrop-blur-md rounded-3xl p-10 max-w-2xl mx-auto shadow-xl border border-pink-100">
                 <h3 class="font-cursive text-4xl text-pink-500 mb-4">I Love You, Armaan</h3>
                 <p class="text-gray-700 mb-8">Thank you for making everything so amazing. Here is to many more! Happy Anniversary! 💕</p>
-                <button onclick="showerHearts()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95">
+                <button onclick="showerHearts()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 btn-3d border-pink-700">
                     Click for a virtual hug! 🫂
                 </button>
             </div>
@@ -457,14 +502,16 @@
         }
 
         function passMath() {
-            // Replace the math quiz content with the romantic quote
+            // Replace the math quiz content with the romantic quote, using the new cute styling
             const quiz1Content = document.getElementById('quiz-1-content');
             quiz1Content.innerHTML = `
                 <div class="fade-in-text flex flex-col items-center">
-                    <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">1 + 1 = 11 😸</h1>
-                    <p class="text-white text-xl md:text-3xl text-center px-6 max-w-2xl leading-relaxed font-medium drop-shadow">
-                        "Because when two souls truly connect, they don’t stay separate numbers anymore... they stand together as one beautiful bond." ❤️
-                    </p>
+                    <h1 class="font-cursive text-5xl md:text-6xl text-pink-600 mb-6 text-center drop-shadow-sm">1 + 1 = 11 😸</h1>
+                    <div class="bg-white/50 p-6 rounded-2xl border border-white/60 shadow-inner">
+                        <p class="text-gray-800 text-lg md:text-2xl text-center font-medium leading-relaxed drop-shadow-sm">
+                            "Because when two souls truly connect, they don’t stay separate numbers anymore... they stand together as one beautiful bond." ❤️
+                        </p>
+                    </div>
                 </div>
             `;
 
@@ -475,8 +522,8 @@
                 
                 // Set initial position of Yes wrapper to be centered relative to its container
                 const yesWrap = document.getElementById('yes-wrap');
-                yesWrap.style.left = 'calc(50% - 130px)'; // rough center based on static No button location
-                yesWrap.style.top = '100px'; // Initial top position within the relative overlay
+                yesWrap.style.left = 'calc(50% - 150px)'; 
+                yesWrap.style.top = '100px'; 
             }, 5500); 
         }
 

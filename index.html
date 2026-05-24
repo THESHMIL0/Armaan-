@@ -153,13 +153,12 @@
             transform: scale(1.1);
         }
 
-        /* Counter Boxes */
+        /* Fixed Counter Boxes for Mobile */
         .time-box {
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid #ffb3c6;
             border-radius: 12px;
-            padding: 10px 15px;
-            min-width: 80px;
+            padding: 8px 4px; /* Reduced padding so they fit nicely */
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
@@ -200,22 +199,22 @@
 
         <section class="mb-24">
             <h2 class="font-cursive text-4xl text-center text-pink-600 mb-6 drop-shadow-sm">Time We've Spent Together ⏱️</h2>
-            <div class="flex flex-wrap justify-center gap-4 text-pink-600 font-bold">
+            <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-md mx-auto px-2 text-pink-600 font-bold">
                 <div class="time-box">
-                    <div id="days" class="text-3xl md:text-4xl">00</div>
-                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Days</div>
+                    <div id="days" class="text-2xl sm:text-3xl md:text-4xl">00</div>
+                    <div class="text-[9px] sm:text-xs tracking-widest uppercase text-gray-500 mt-1">Days</div>
                 </div>
                 <div class="time-box">
-                    <div id="hours" class="text-3xl md:text-4xl">00</div>
-                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Hours</div>
+                    <div id="hours" class="text-2xl sm:text-3xl md:text-4xl">00</div>
+                    <div class="text-[9px] sm:text-xs tracking-widest uppercase text-gray-500 mt-1">Hours</div>
                 </div>
                 <div class="time-box">
-                    <div id="minutes" class="text-3xl md:text-4xl">00</div>
-                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Mins</div>
+                    <div id="minutes" class="text-2xl sm:text-3xl md:text-4xl">00</div>
+                    <div class="text-[9px] sm:text-xs tracking-widest uppercase text-gray-500 mt-1">Mins</div>
                 </div>
                 <div class="time-box">
-                    <div id="seconds" class="text-3xl md:text-4xl">00</div>
-                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Secs</div>
+                    <div id="seconds" class="text-2xl sm:text-3xl md:text-4xl">00</div>
+                    <div class="text-[9px] sm:text-xs tracking-widest uppercase text-gray-500 mt-1">Secs</div>
                 </div>
             </div>
         </section>
@@ -400,4 +399,4 @@
     </script>
 </body>
     </html>
-                    
+                

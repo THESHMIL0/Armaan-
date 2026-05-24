@@ -10,7 +10,7 @@
         body {
             font-family: 'Quicksand', sans-serif;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
         }
 
@@ -18,7 +18,7 @@
             font-family: 'Caveat', cursive;
         }
 
-        /* --- NEW CUTE STYLES --- */
+        /* --- CUTE STYLES --- */
         .bg-cute-gradient {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
         }
@@ -35,7 +35,7 @@
         /* 3D Button Effect */
         .btn-3d {
             transition: all 0.1s ease;
-            border-bottom: 5px solid #d81b60; /* Dark pink shadow */
+            border-bottom: 5px solid #d81b60; 
             position: relative;
         }
         .btn-3d:active {
@@ -44,7 +44,7 @@
         }
         .btn-3d-white {
             transition: all 0.1s ease;
-            border-bottom: 5px solid #e2e8f0; /* Gray shadow for white buttons */
+            border-bottom: 5px solid #e2e8f0; 
         }
         .btn-3d-white:active {
             transform: translateY(5px);
@@ -58,7 +58,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
-        /* ----------------------- */
 
 
         /* Heart Falling Animation */
@@ -392,8 +391,8 @@
                     <div class="timeline-dot absolute right-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform translate-x-1/2 -translate-y-1/2" style="right: -3px;"></div>
                     <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
                         <span class="text-pink-500 font-bold text-sm tracking-wider">APRIL 25</span>
-                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Our 1 Month Anniversary! 🎉</h3>
-                        <p class="text-gray-600">The start of something beautiful. Happy anniversary to us!</p>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Day 1 ✨</h3>
+                        <p class="text-gray-600">The day our beautiful story officially began.</p>
                     </div>
                 </div>
 
@@ -403,6 +402,15 @@
                         <span class="text-pink-500 font-bold text-sm tracking-wider">MAY 6</span>
                         <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Our First Kiss 💋</h3>
                         <p class="text-gray-600">A perfect memory I will never forget.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item relative w-1/2 pr-12 text-right mb-12">
+                    <div class="timeline-dot absolute right-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform translate-x-1/2 -translate-y-1/2" style="right: -3px;"></div>
+                    <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
+                        <span class="text-pink-500 font-bold text-sm tracking-wider">MAY 25</span>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">1 Month Anniversary! 🎉</h3>
+                        <p class="text-gray-600">One whole month of making the best memories together.</p>
                     </div>
                 </div>
 
@@ -502,29 +510,30 @@
         }
 
         function passMath() {
-            // Replace the math quiz content with the romantic quote, using the new cute styling
+            // Replace the math quiz content with the romantic quote AND the awwwww button
             const quiz1Content = document.getElementById('quiz-1-content');
             quiz1Content.innerHTML = `
                 <div class="fade-in-text flex flex-col items-center">
                     <h1 class="font-cursive text-5xl md:text-6xl text-pink-600 mb-6 text-center drop-shadow-sm">1 + 1 = 11 😸</h1>
-                    <div class="bg-white/50 p-6 rounded-2xl border border-white/60 shadow-inner">
+                    <div class="bg-white/50 p-6 rounded-2xl border border-white/60 shadow-inner mb-8">
                         <p class="text-gray-800 text-lg md:text-2xl text-center font-medium leading-relaxed drop-shadow-sm">
                             "Because when two souls truly connect, they don’t stay separate numbers anymore... they stand together as one beautiful bond." ❤️
                         </p>
                     </div>
+                    <button onclick="continueToLoveQuiz()" class="pulse-btn bg-pink-500 text-white font-bold py-3 px-10 rounded-full text-2xl shadow-xl hover:bg-pink-600 transition btn-3d">awwwww 🥰</button>
                 </div>
             `;
+        }
 
-            // Wait 5 seconds so he can read the quote, then transition to the Love Quiz
-            setTimeout(() => {
-                document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
-                document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
-                
-                // Set initial position of Yes wrapper to be centered relative to its container
-                const yesWrap = document.getElementById('yes-wrap');
-                yesWrap.style.left = 'calc(50% - 150px)'; 
-                yesWrap.style.top = '100px'; 
-            }, 5500); 
+        function continueToLoveQuiz() {
+            // Triggered only when the "awwwww" button is clicked
+            document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
+            document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
+            
+            // Set initial position of Yes wrapper to be centered relative to its container
+            const yesWrap = document.getElementById('yes-wrap');
+            yesWrap.style.left = 'calc(50% - 150px)'; 
+            yesWrap.style.top = '100px'; 
         }
 
         function wrongLove() {

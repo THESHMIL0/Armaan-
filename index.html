@@ -127,9 +127,52 @@
             position: relative;
             z-index: 10;
         }
+
+        /* Floating Music Button */
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border: 2px solid #ff8fab;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        #music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Counter Boxes */
+        .time-box {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ffb3c6;
+            border-radius: 12px;
+            padding: 10px 15px;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-pink-300 selection:text-white">
+
+    <audio id="bgMusic" loop>
+        <source src="9.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
     <div id="surprise-overlay">
         <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">Hi Armaan...</h1>
@@ -142,18 +185,40 @@
 
     <div id="main-content" class="container mx-auto px-4 py-12 max-w-5xl">
         
-        <header class="text-center mb-20 pt-10">
+        <header class="text-center mb-16 pt-10">
             <div class="inline-block bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/50 relative">
                 <div class="absolute -top-6 -right-6 text-6xl transform rotate-12">🌝</div>
                 <div class="absolute -bottom-6 -left-6 text-6xl transform -rotate-12">✨</div>
                 
-                <h2 class="text-xl md:text-2xl font-bold text-pink-500 tracking-widest uppercase mb-2">Happy 1 Month Anniversary</h2>
-                <h1 class="font-cursive text-6xl md:text-8xl text-pink-600 mb-6 mt-4">Armaan & Me 💕</h1>
+                <h2 class="text-xl md:text-2xl font-bold text-pink-500 tracking-widest uppercase mb-2">Happy Anniversary</h2>
+                <h1 class="font-cursive text-6xl md:text-8xl text-pink-600 mb-6 mt-4">Armaan & Shreee 💕</h1>
                 <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
-                    One whole month of making the best memories together. I made this little page just for us to celebrate everything so far. 😸💕
+                    Making the best memories together. I made this little page just for us to celebrate everything so far. 😸💕
                 </p>
             </div>
         </header>
+
+        <section class="mb-24">
+            <h2 class="font-cursive text-4xl text-center text-pink-600 mb-6 drop-shadow-sm">Time We've Spent Together ⏱️</h2>
+            <div class="flex flex-wrap justify-center gap-4 text-pink-600 font-bold">
+                <div class="time-box">
+                    <div id="days" class="text-3xl md:text-4xl">00</div>
+                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Days</div>
+                </div>
+                <div class="time-box">
+                    <div id="hours" class="text-3xl md:text-4xl">00</div>
+                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Hours</div>
+                </div>
+                <div class="time-box">
+                    <div id="minutes" class="text-3xl md:text-4xl">00</div>
+                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Mins</div>
+                </div>
+                <div class="time-box">
+                    <div id="seconds" class="text-3xl md:text-4xl">00</div>
+                    <div class="text-xs tracking-widest uppercase text-gray-500 mt-1">Secs</div>
+                </div>
+            </div>
+        </section>
 
         <section class="mb-24">
             <h2 class="font-cursive text-5xl text-center text-pink-600 mb-16 drop-shadow-sm">Our Timeline ⏳</h2>
@@ -183,7 +248,7 @@
                     <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
                         <span class="text-pink-500 font-bold text-sm tracking-wider">APRIL 25</span>
                         <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Our 1 Month Anniversary! 🎉</h3>
-                        <p class="text-gray-600">The start of something beautiful. Happy 1 month to us!</p>
+                        <p class="text-gray-600">The start of something beautiful. Happy anniversary to us!</p>
                     </div>
                 </div>
 
@@ -225,7 +290,7 @@
         <footer class="text-center mt-24 mb-12">
             <div class="bg-white/70 backdrop-blur-md rounded-3xl p-10 max-w-2xl mx-auto shadow-xl border border-pink-100">
                 <h3 class="font-cursive text-4xl text-pink-500 mb-4">I Love You, Armaan</h3>
-                <p class="text-gray-700 mb-8">Thank you for making this past month so amazing. Here is to many more! Happy Anniversary! 💕</p>
+                <p class="text-gray-700 mb-8">Thank you for making everything so amazing. Here is to many more! Happy Anniversary! 💕</p>
                 <button onclick="showerHearts()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95">
                     Click for a virtual hug! 🫂
                 </button>
@@ -235,7 +300,7 @@
     </div>
 
     <script>
-        // Array of cute emojis
+        // --- EMOJI SHOWER LOGIC ---
         const symbols = ['❤️', '💕', '✨', '💋', '😸', '💖'];
 
         function createHeart() {
@@ -259,11 +324,26 @@
         }
 
         let heartInterval;
+        const music = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("music-btn");
+        let isPlaying = false;
 
         function revealSurprise() {
             const overlay = document.getElementById('surprise-overlay');
             const mainContent = document.getElementById('main-content');
             
+            // Play Music
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.innerText = "⏸️";
+            }).catch(e => {
+                console.log("Autoplay blocked, user needs to click play manually.");
+                musicBtn.innerText = "▶️";
+            });
+            
+            // Show Music Button
+            musicBtn.style.display = "flex";
+
             overlay.style.opacity = '0';
             overlay.style.transform = 'scale(1.1)';
             
@@ -280,12 +360,44 @@
             }, 1000);
         }
 
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.innerText = "▶️";
+            } else {
+                music.play();
+                musicBtn.innerText = "⏸️";
+            }
+            isPlaying = !isPlaying;
+        }
+
         function showerHearts() {
             for(let i=0; i<40; i++) {
                 setTimeout(createHeart, i * 50);
             }
         }
+
+        // --- LIVE COUNTER LOGIC ---
+        // Assuming March 25th as the start date since April 25th was the 1 month mark.
+        const startDate = new Date("March 25, 2026 00:00:00").getTime();
+
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Add leading zero if less than 10
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+
     </script>
 </body>
-        </html>
-                            
+    </html>
+                    

@@ -34,8 +34,8 @@
             }
         }
 
-        /* Initial Envelope/Surprise Screen */
-        #surprise-overlay {
+        /* Full Screen Overlays */
+        .overlay-screen {
             position: fixed;
             inset: 0;
             background: #ffb3c6;
@@ -44,7 +44,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease, transform 1s ease;
+            transition: opacity 0.5s ease;
+        }
+
+        .hidden-screen {
+            display: none !important;
         }
 
         .pulse-btn {
@@ -55,6 +59,11 @@
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.7); }
             70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+        }
+
+        /* Running Button transition */
+        #yes-btn {
+            transition: left 0.2s ease, top 0.2s ease;
         }
 
         /* Polaroid Photo Gallery Style */
@@ -173,14 +182,39 @@
 
     <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
-    <div id="surprise-overlay">
+    <div id="surprise-overlay" class="overlay-screen">
         <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">Hi Armaan...</h1>
         <p class="text-white text-xl mb-12 text-center px-4">I have a little surprise for you 🤫</p>
-        <button onclick="revealSurprise()" class="pulse-btn bg-white text-pink-500 font-bold py-4 px-10 rounded-full text-xl shadow-xl hover:bg-pink-50 transition duration-300 flex items-center gap-3">
+        <button onclick="startQuiz()" class="pulse-btn bg-white text-pink-500 font-bold py-4 px-10 rounded-full text-xl shadow-xl hover:bg-pink-50 transition duration-300 flex items-center gap-3">
             <span>Tap to Open</span>
             <span class="text-2xl">💌</span>
         </button>
     </div>
+
+    <div id="quiz-1-overlay" class="overlay-screen hidden-screen">
+        <h1 class="font-cursive text-4xl md:text-6xl text-white mb-4 text-center px-4 drop-shadow-md">Wait! 🛑</h1>
+        <p class="text-white text-lg md:text-xl mb-8 text-center px-6 max-w-md">You need to solve this hard question before you can see your gift.</p>
+        
+        <div class="bg-white/30 backdrop-blur-md p-8 rounded-3xl border border-white/50 mb-10">
+            <h2 class="font-bold text-5xl text-pink-600 text-center">1 + 1 = ?</h2>
+        </div>
+
+        <div class="flex gap-6">
+            <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">1</button>
+            <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">11</button>
+        </div>
+    </div>
+
+    <div id="quiz-2-overlay" class="overlay-screen hidden-screen">
+        <h1 class="font-cursive text-5xl md:text-7xl text-white mb-12 text-center px-4 drop-shadow-md">Do you love me? 🥺</h1>
+        
+        <div class="flex gap-8 relative w-full justify-center" style="height: 60px;">
+            <button id="yes-btn" onclick="tryYes()" class="bg-pink-500 text-white border-2 border-white font-bold py-3 px-10 rounded-full text-2xl shadow-lg absolute">Yes</button>
+            
+            <button onclick="wrongLove()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-2xl shadow-lg z-10" style="margin-left: 150px;">No</button>
+        </div>
+    </div>
+
 
     <div id="main-content" class="container mx-auto px-4 py-12 max-w-5xl">
         
@@ -299,36 +333,82 @@
     </div>
 
     <script>
-        // --- EMOJI SHOWER LOGIC ---
-        const symbols = ['❤️', '💕', '✨', '💋', '😸', '💖'];
+        // --- QUIZ LOGIC ---
+        let yesClicks = 0;
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            
-            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; 
-            
-            const size = Math.random() * 15 + 15; 
-            heart.style.fontSize = size + 'px';
-            heart.style.opacity = Math.random() * 0.5 + 0.3; 
-
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
+        function startQuiz() {
+            document.getElementById('surprise-overlay').classList.add('hidden-screen');
+            document.getElementById('quiz-1-overlay').classList.remove('hidden-screen');
         }
 
+        function wrongMath() {
+            alert("Wrong! 1+1 is obviously 11 bro, try again 🙄");
+        }
+
+        function passMath() {
+            document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
+            document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
+            
+            // Set initial position of Yes button to be centered relative to its container
+            const yesBtn = document.getElementById('yes-btn');
+            yesBtn.style.left = 'calc(50% - 130px)'; 
+        }
+
+        function wrongLove() {
+            alert("EXCUSE ME?! 🤨 Try that again.");
+        }
+
+        function tryYes() {
+            const yesBtn = document.getElementById('yes-btn');
+            
+            if (yesClicks < 3) {
+                // Change position to fixed so it can jump anywhere on the screen
+                yesBtn.style.position = 'fixed';
+                
+                // Calculate random X and Y within screen bounds
+                const maxX = window.innerWidth - yesBtn.offsetWidth - 20;
+                const maxY = window.innerHeight - yesBtn.offsetHeight - 20;
+                
+                const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+                const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+                
+                yesBtn.style.left = randomX + 'px';
+                yesBtn.style.top = randomY + 'px';
+                
+                yesClicks++;
+            } else {
+                // On the 4th click, they finally catch it and pass!
+                document.getElementById('quiz-2-overlay').style.opacity = '0';
+                
+                setTimeout(() => {
+                    document.getElementById('quiz-2-overlay').classList.add('hidden-screen');
+                    finalReveal();
+                }, 500);
+            }
+        }
+
+
+        // --- EMOJI SHOWER & REVEAL LOGIC ---
+        const symbols = ['❤️', '💕', '✨', '💋', '😸', '💖'];
         let heartInterval;
         const music = document.getElementById("bgMusic");
         const musicBtn = document.getElementById("music-btn");
         let isPlaying = false;
 
-        function revealSurprise() {
-            const overlay = document.getElementById('surprise-overlay');
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; 
+            const size = Math.random() * 15 + 15; 
+            heart.style.fontSize = size + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3; 
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 7000);
+        }
+
+        function finalReveal() {
             const mainContent = document.getElementById('main-content');
             
             // Play Music
@@ -340,23 +420,13 @@
                 musicBtn.innerText = "▶️";
             });
             
-            // Show Music Button
             musicBtn.style.display = "flex";
-
-            overlay.style.opacity = '0';
-            overlay.style.transform = 'scale(1.1)';
-            
-            // Starts the continuous floating emojis
             heartInterval = setInterval(createHeart, 300);
 
+            mainContent.style.display = 'block';
             setTimeout(() => {
-                overlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                
-                setTimeout(() => {
-                    mainContent.style.opacity = '1';
-                }, 100);
-            }, 1000);
+                mainContent.style.opacity = '1';
+            }, 100);
         }
 
         function toggleMusic() {
@@ -377,7 +447,6 @@
         }
 
         // --- LIVE COUNTER LOGIC ---
-        // Changed start date to April 25 to show the 30-day count perfectly!
         const startDate = new Date("April 25, 2026 00:00:00").getTime();
 
         setInterval(function() {
@@ -389,7 +458,6 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Add leading zero if less than 10
             document.getElementById("days").innerText = days < 10 ? "0" + days : days;
             document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
@@ -398,5 +466,4 @@
 
     </script>
 </body>
-                            </html>
-    
+</html>

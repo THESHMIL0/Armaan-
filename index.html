@@ -61,10 +61,63 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
         }
 
-        /* Running Button transition */
-        #yes-btn {
+        /* Running Button & Bubble transition */
+        #yes-wrap {
             transition: left 0.2s ease, top 0.2s ease;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none; /* Let clicks pass through container */
         }
+
+        #yes-btn {
+            pointer-events: auto; /* Re-enable clicks for the actual button */
+        }
+
+        /* Thinking Bubble Styles */
+        #thought-bubble {
+            background: white;
+            border: 2px solid #ffb3c6;
+            border-radius: 20px;
+            padding: 8px 15px;
+            position: relative;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        /* Bubble Triangle */
+        #thought-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+        #thought-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 11px 11px 0;
+            border-style: solid;
+            border-color: #ffb3c6 transparent transparent;
+            display: block;
+            width: 0;
+            z-index: 0;
+        }
+
 
         /* Polaroid Photo Gallery Style */
         .polaroid {
@@ -200,18 +253,21 @@
         </div>
 
         <div class="flex gap-6">
-            <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">1</button>
+            <button onclick="wrongMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">2</button>
             <button onclick="passMath()" class="bg-white text-pink-500 font-bold py-3 px-8 rounded-full text-2xl shadow-lg active:scale-95 transition">11</button>
         </div>
     </div>
 
-    <div id="quiz-2-overlay" class="overlay-screen hidden-screen">
+    <div id="quiz-2-overlay" class="overlay-screen hidden-screen relative">
         <h1 class="font-cursive text-5xl md:text-7xl text-white mb-12 text-center px-4 drop-shadow-md">Do you love me? 🥺</h1>
         
+        <div id="yes-wrap">
+            <div id="thought-bubble" class="text-pink-600 font-medium text-sm md:text-base">Hmmm... 🤔</div>
+            <button id="yes-btn" onclick="tryYes()" class="bg-pink-500 text-white border-2 border-white font-bold py-3 px-10 rounded-full text-2xl shadow-lg z-10">Yes</button>
+        </div>
+        
         <div class="flex gap-8 relative w-full justify-center" style="height: 60px;">
-            <button id="yes-btn" onclick="tryYes()" class="bg-pink-500 text-white border-2 border-white font-bold py-3 px-10 rounded-full text-2xl shadow-lg absolute">Yes</button>
-            
-            <button onclick="wrongLove()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-2xl shadow-lg z-10" style="margin-left: 150px;">No</button>
+            <button onclick="wrongLove()" class="bg-white text-pink-500 font-bold py-3 px-10 rounded-full text-2xl shadow-lg z-0" style="margin-left: 150px;">No</button>
         </div>
     </div>
 
@@ -342,11 +398,30 @@
     </div>
 
     <script>
+        // --- DIALOGUE LISTS ---
+        const provokingPhrases = [
+            "Too slow! 😜",
+            "Catch me if you can! 🏃‍♂️",
+            "Is that all you got? 😂",
+            "Missed me! 🙃",
+            "Nope! Try again."
+        ];
+
+        const couragePhrases = [
+            "Almost! 😉",
+            "You're getting faster!",
+            "So close!",
+            "Don't give up now! 💪",
+            "Okay, almost there..."
+        ];
+
         // --- QUIZ LOGIC ---
         let yesClicks = 0;
         let isPlaying = false;
+        let bubbleTimeout;
         const music = document.getElementById("bgMusic");
         const musicBtn = document.getElementById("music-btn");
+        const thoughtBubble = document.getElementById('thought-bubble');
 
         function startQuiz() {
             document.getElementById('surprise-overlay').classList.add('hidden-screen');
@@ -373,41 +448,69 @@
             document.getElementById('quiz-1-overlay').classList.add('hidden-screen');
             document.getElementById('quiz-2-overlay').classList.remove('hidden-screen');
             
-            // Set initial position of Yes button to be centered relative to its container
-            const yesBtn = document.getElementById('yes-btn');
-            yesBtn.style.left = 'calc(50% - 130px)'; 
+            // Set initial position of Yes wrapper to be centered relative to its container
+            const yesWrap = document.getElementById('yes-wrap');
+            yesWrap.style.left = 'calc(50% - 130px)'; // rough center based on static No button location
+            yesWrap.style.top = '100px'; // Initial top position within the relative overlay
         }
 
         function wrongLove() {
             alert("EXCUSE ME?! 🤨 Try that again.");
         }
 
-        function tryYes() {
-            const yesBtn = document.getElementById('yes-btn');
+        function showBubble(text) {
+            clearTimeout(bubbleTimeout); // Clear any existing hide timer
+            thoughtBubble.innerText = text;
+            thoughtBubble.style.opacity = '1';
             
-            if (yesClicks < 3) {
+            // Hide bubble after 1.5 seconds
+            bubbleTimeout = setTimeout(() => {
+                thoughtBubble.style.opacity = '0';
+            }, 1500);
+        }
+
+        function tryYes() {
+            const yesWrap = document.getElementById('yes-wrap');
+            
+            if (yesClicks < 10) { // Now he has to chase it 10 times!
                 // Change position to fixed so it can jump anywhere on the screen
-                yesBtn.style.position = 'fixed';
+                yesWrap.style.position = 'fixed';
+                yesWrap.style.transform = 'translate(-50%, -50%)'; // Center wrapper on random coordinates
                 
                 // Calculate random X and Y within screen bounds
-                const maxX = window.innerWidth - yesBtn.offsetWidth - 20;
-                const maxY = window.innerHeight - yesBtn.offsetHeight - 20;
+                const maxX = window.innerWidth - 100; // Account for bubble width
+                const maxY = window.innerHeight - 150; // Account for bubble height
                 
-                const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-                const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+                const randomX = Math.max(100, Math.floor(Math.random() * maxX));
+                const randomY = Math.max(150, Math.floor(Math.random() * maxY));
                 
-                yesBtn.style.left = randomX + 'px';
-                yesBtn.style.top = randomY + 'px';
+                yesWrap.style.left = randomX + 'px';
+                yesWrap.style.top = randomY + 'px';
+                
+                // Choose phrase based on click count
+                let phrase;
+                if (yesClicks < 5) {
+                    phrase = provokingPhrases[yesClicks];
+                } else {
+                    // Use courage phrases for clicks 5 through 9
+                    phrase = couragePhrases[yesClicks - 5];
+                }
+                showBubble(phrase);
                 
                 yesClicks++;
             } else {
-                // On the 4th click, they finally catch it and pass!
-                document.getElementById('quiz-2-overlay').style.opacity = '0';
+                // On the 11th click, they finally catch it and pass!
+                showBubble("Yay! I love you too! ❤️");
                 
+                // Slight delay to let them read the final bubble
                 setTimeout(() => {
-                    document.getElementById('quiz-2-overlay').classList.add('hidden-screen');
-                    finalReveal();
-                }, 500);
+                    document.getElementById('quiz-2-overlay').style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        document.getElementById('quiz-2-overlay').classList.add('hidden-screen');
+                        finalReveal();
+                    }, 500);
+                }, 1000);
             }
         }
 

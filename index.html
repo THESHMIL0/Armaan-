@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Armaan 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            min-height: 100vh;
+        }
+
+        .font-cursive {
+            font-family: 'Caveat', cursive;
+        }
+
+        /* Heart Falling Animation */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            transform: translateY(0);
+            animation: fall linear forwards;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* Initial Envelope/Surprise Screen */
+        #surprise-overlay {
+            position: fixed;
+            inset: 0;
+            background: #ffb3c6;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+        }
+
+        /* Polaroid Photo Gallery Style */
+        .polaroid {
+            background: white;
+            padding: 10px 10px 40px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .polaroid-caption {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            left: 0;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        /* Timeline Layout */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: #ff8fab;
+            transform: translateX(-50%);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container::before {
+                left: 20px;
+            }
+            .timeline-item {
+                width: 100% !important;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+                margin-left: 0 !important;
+            }
+            .timeline-dot {
+                left: 20px !important;
+                transform: translateX(-50%) !important;
+            }
+        }
+        
+        #main-content {
+            opacity: 0;
+            display: none;
+            transition: opacity 1.5s ease-in;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-pink-300 selection:text-white">
+
+    <div id="surprise-overlay">
+        <h1 class="font-cursive text-5xl md:text-7xl text-white mb-8 text-center drop-shadow-md">Hi Armaan...</h1>
+        <p class="text-white text-xl mb-12 text-center px-4">I have a little surprise for you 🤫</p>
+        <button onclick="revealSurprise()" class="pulse-btn bg-white text-pink-500 font-bold py-4 px-10 rounded-full text-xl shadow-xl hover:bg-pink-50 transition duration-300 flex items-center gap-3">
+            <span>Tap to Open</span>
+            <span class="text-2xl">💌</span>
+        </button>
+    </div>
+
+    <div id="main-content" class="container mx-auto px-4 py-12 max-w-5xl">
+        
+        <header class="text-center mb-20 pt-10">
+            <div class="inline-block bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/50 relative">
+                <div class="absolute -top-6 -right-6 text-6xl transform rotate-12">🌝</div>
+                <div class="absolute -bottom-6 -left-6 text-6xl transform -rotate-12">✨</div>
+                
+                <h2 class="text-xl md:text-2xl font-bold text-pink-500 tracking-widest uppercase mb-2">Happy 1 Month Anniversary</h2>
+                <h1 class="font-cursive text-6xl md:text-8xl text-pink-600 mb-6 mt-4">Armaan & Me 💕</h1>
+                <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                    One whole month of making the best memories together. I made this little page just for us to celebrate everything so far. 😸💕
+                </p>
+            </div>
+        </header>
+
+        <section class="mb-24">
+            <h2 class="font-cursive text-5xl text-center text-pink-600 mb-16 drop-shadow-sm">Our Timeline ⏳</h2>
+            
+            <div class="timeline-container relative max-w-4xl mx-auto pb-10">
+                
+                <div class="timeline-item relative w-1/2 pr-12 text-right mb-12">
+                    <div class="timeline-dot absolute right-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform translate-x-1/2 -translate-y-1/2" style="right: -3px;"></div>
+                    <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
+                        <span class="text-pink-500 font-bold text-sm tracking-wider">JANUARY 9</span>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">My Birthday 🎂</h3>
+                        <p class="text-gray-600">The day I was born, so I could eventually meet my favorite person.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item relative w-1/2 pl-12 ml-auto text-left mb-12">
+                    <div class="timeline-dot absolute left-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform -translate-x-1/2 -translate-y-1/2" style="left: -3px;"></div>
+                    <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
+                        <span class="text-pink-500 font-bold text-sm tracking-wider">MARCH 8</span>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Your Birthday 🎈</h3>
+                        <p class="text-gray-600">A very special day because it brought you into the world.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item relative w-1/2 pr-12 text-right mb-12">
+                    <div class="timeline-dot absolute right-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform translate-x-1/2 -translate-y-1/2" style="right: -3px;"></div>
+                    <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
+                        <span class="text-pink-500 font-bold text-sm tracking-wider">APRIL 25</span>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Our 1 Month Anniversary! 🎉</h3>
+                        <p class="text-gray-600">The start of something beautiful. Happy 1 month to us!</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item relative w-1/2 pl-12 ml-auto text-left mb-12">
+                    <div class="timeline-dot absolute left-0 top-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white shadow-md transform -translate-x-1/2 -translate-y-1/2" style="left: -3px;"></div>
+                    <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl transition-shadow">
+                        <span class="text-pink-500 font-bold text-sm tracking-wider">MAY 6</span>
+                        <h3 class="font-cursive text-3xl text-gray-800 mt-2 mb-2">Our First Kiss 💋</h3>
+                        <p class="text-gray-600">A perfect memory I will never forget.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="font-cursive text-5xl text-center text-pink-600 mb-12 drop-shadow-sm">Our Memories 📸</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto px-8">
+                
+                <div class="polaroid transform -rotate-3">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83164ba?q=80&w=600&auto=format&fit=crop" alt="Us 1">
+                    <div class="polaroid-caption">You & Me ❤️</div>
+                </div>
+
+                <div class="polaroid transform rotate-2 translate-y-4">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=600&auto=format&fit=crop" alt="Us 2">
+                    <div class="polaroid-caption">Best times 😸</div>
+                </div>
+
+                <div class="polaroid transform -rotate-2">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600&auto=format&fit=crop" alt="Us 3">
+                    <div class="polaroid-caption">My favorite ✨</div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="text-center mt-24 mb-12">
+            <div class="bg-white/70 backdrop-blur-md rounded-3xl p-10 max-w-2xl mx-auto shadow-xl border border-pink-100">
+                <h3 class="font-cursive text-4xl text-pink-500 mb-4">I Love You, Armaan</h3>
+                <p class="text-gray-700 mb-8">Thank you for making this past month so amazing. Here is to many more! Happy Anniversary! 💕</p>
+                <button onclick="showerHearts()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95">
+                    Click for a virtual hug! 🫂
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Array of cute emojis based on your prompt
+        const symbols = ['❤️', '💕', '✨', '💋', '😸', '💖'];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; 
+            
+            const size = Math.random() * 15 + 15; 
+            heart.style.fontSize = size + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3; 
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        let heartInterval;
+
+        function revealSurprise() {
+            const overlay = document.getElementById('surprise-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            overlay.style.opacity = '0';
+            overlay.style.transform = 'scale(1.1)';
+            
+            // Starts the continuous floating emojis
+            heartInterval = setInterval(createHeart, 300);
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                }, 100);
+            }, 1000);
+        }
+
+        function showerHearts() {
+            for(let i=0; i<40; i++) {
+                setTimeout(createHeart, i * 50);
+            }
+        }
+    </script>
+</body>
+  </html>
+                          

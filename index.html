@@ -158,7 +158,7 @@
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid #ffb3c6;
             border-radius: 12px;
-            padding: 8px 4px; /* Reduced padding so they fit nicely */
+            padding: 8px 4px; 
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
@@ -377,8 +377,8 @@
         }
 
         // --- LIVE COUNTER LOGIC ---
-        // Assuming March 25th as the start date since April 25th was the 1 month mark.
-        const startDate = new Date("March 25, 2026 00:00:00").getTime();
+        // Changed start date to April 25 to show the 30-day count perfectly!
+        const startDate = new Date("April 25, 2026 00:00:00").getTime();
 
         setInterval(function() {
             const now = new Date().getTime();
@@ -398,5 +398,5 @@
 
     </script>
 </body>
-    </html>
-                
+                            </html>
+    
